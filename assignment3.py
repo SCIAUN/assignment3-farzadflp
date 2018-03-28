@@ -1,11 +1,10 @@
 import socket
 
 ports=[21,22,25,80,110,9090];
-socket.setdefaulttimeout(5);
+socket.setdefaulttimeout(10);
 f=open('host_names','r');
 host_names=f.read();
 host_names=host_names.split('\n');
-
 for x in host_names:
     for y in ports:
         try:
@@ -14,7 +13,7 @@ for x in host_names:
             print(x,'\t',y);
             s=socket.socket();
             s.connect((x,y));
-            ans=s.recv(y);
+            ans=s.recv(1024);
             ans=str(ans);
             if "FreeFloat Ftp Server (Version 1.00)" in ans:
                 print("[+] FreeFloat server is vulnerable ",'\n');
